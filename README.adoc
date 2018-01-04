@@ -5,6 +5,7 @@
 .2 build dependant project using `gradle-consumer` from Github
 ----
 bash ./gradlew clean build -b gradle-consumer/build.gradle
+java -jar gradle-consumer/build/libs/*-all.jar
 ----
 
 === maven flow
