@@ -2,17 +2,18 @@
 
 === flow
 
-.1 build `maven-producer` library
+.1 build and deploy (publish) `maven-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: libs)
 ----
-bash ./mvnw clean package -U -pl maven-producer
+# using custom settings.xml
+bash mvnw clean deploy -U -f maven-producer/pom.xml -s maven-producer/settings.xml
+
+# or after modifiyng ~/.m2/settings.xml
+cp maven-producer/settings.xml ~/.m2/
+bash mvnw clean deploy -f maven-producer/pom.xml -P publish-to-github-example-deployment-profile
 ----
 
-.2 deploy (publish) `maven-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: libs)
+.2 build dependant project using `maven-producer` as a dependency from Github
 ----
-bash ./mvnw clean package -U -pl maven-producer
-----
-
-.3 build project which is using `maven-producer` library
-----
-bash ./mvnw clean package -U -pl maven-producer
+bash ./mvnw clean package -U -pl maven-consumer
+java -jar maven-consumer/target/*-all.jar
 ----

@@ -5,6 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdk.version>1.8</jdk.version>
+
     <kotlin.version>1.2.10</kotlin.version>
     <junit.version>4.12</junit.version>
     <slf4j.version>1.7.25</slf4j.version>
@@ -14,20 +17,19 @@
     <junit.platform.version>1.0.2</junit.platform.version>
 
     <!-- github aftifactory maven repository -->
-    <github.global.server>github</github.global.server>
-    <github.branch.name>libs</github.branch.name>
-    <github.branch>refs/heads/${github.branch.name}</github.branch>
-    <github.repository.name>publish-java-to-github-example</github.repository.name>
-    <github.repository.owner>daggerok</github.repository.owner>
+    <github.global.server>${github.server}</github.global.server>
   </properties>
 
-  <parent>
-    <groupId>daggerok</groupId>
-    <artifactId>publish-java-to-github-example</artifactId>
-    <version>0.0.1</version>
-  </parent>
+  <!-- github aftifactory maven repository -->
+  <scm>
+    <developerConnection>scm:git:git@github.com:daggerok/publish-to-github-example.git</developerConnection>
+    <connection>scm:git:https://github.com/daggerok/publish-to-github-example.git</connection>
+    <url>https://github.com/daggerok/publish-to-github-example</url>
+  </scm>
 
+  <groupId>daggerok</groupId>
   <artifactId>maven-producer</artifactId>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <dependencies>
@@ -123,7 +125,56 @@
   </dependencies>
 
   <build>
+    <defaultGoal>clean package</defaultGoal>
+
     <plugins>
+      <!-- javadoc -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.0-M1</version>
+        <configuration>
+          <minmemory>128m</minmemory>
+          <maxmemory>512m</maxmemory>
+        </configuration>
+      </plugin>
+
+      <!-- javac -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${jdk.version}</source>
+          <target>${jdk.version}</target>
+        </configuration>
+      </plugin>
+
+      <!-- resources -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
       <!-- junit 5 -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -159,7 +210,7 @@
         <artifactId>maven-deploy-plugin</artifactId>
         <version>2.8.1</version>
         <configuration>
-          <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/${github.branch.name}</altDeploymentRepository>
+          <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/${github.branchName}</altDeploymentRepository>
         </configuration>
       </plugin>
       <plugin>
@@ -172,16 +223,16 @@
           <!-- disable webpage processing: -->
           <noJekyll>true</noJekyll>
           <!-- matches distribution management repository url: -->
-          <outputDirectory>${project.build.directory}/${github.branch.name}</outputDirectory>
+          <outputDirectory>${project.build.directory}/${github.branchName}</outputDirectory>
           <!-- remote branch name: -->
           <branch>${github.branch}</branch>
           <includes>
             <include>**/*</include>
           </includes>
           <!-- github repo name: -->
-          <repositoryName>${github.repository.name}</repositoryName>
+          <repositoryName>publish-to-github-example</repositoryName>
           <!-- github username: -->
-          <repositoryOwner>${github.repository.owner}</repositoryOwner>
+          <repositoryOwner>daggerok</repositoryOwner>
         </configuration>
         <executions>
           <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
@@ -193,6 +244,31 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${github.branchName}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}</directory>
+                  <includes>
+                    <include>.travis.yml</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -200,17 +276,26 @@
     github aftifactory maven repository:
 
     mvn clean deploy -pl maven-producer
-    tree maven-producer/target/mvn-repo
+    tree maven-producer/target/libs
 
     cp maven-producer/settings.xml-default maven-producer/settings.xml
     mvn clean deploy -pl maven-producer -s maven-producer/settings.xml
-    tree maven-producer/target/mvn-repo
+
+    cp maven-producer/settings.xml-default ~/.m2/settings.xml
+    mvn clean deploy -pl maven-producer -P publish-to-github-example-deployment-profile
+
+    tree maven-producer/target/libs
   -->
   <distributionManagement>
+    <snapshotRepository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/${github.branchName}</url>
+    </snapshotRepository>
     <repository>
       <id>internal.repo</id>
       <name>Temporary Staging Repository</name>
-      <url>file://${project.build.directory}/${github.branch.name}</url>
+      <url>file://${project.build.directory}/${github.branchName}</url>
     </repository>
   </distributionManagement>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  NOTE: MAKE SURE THAT settings.xml IS NOT WORLD READABLE!
+  note: MAKE SURE that settings.xml IS NOT WORLD READABLE!
 
   cp settings.xml-default settings.xml
   vim settings.xml
@@ -9,12 +9,32 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <!--
+    optional for ~/.m2/settings.xml
+    used only in case of command: `mvn -s maven-producer/settings.xml ...`
+  -->
+  <activeProfiles>
+    <activeProfile>publish-to-github-example-deployment-profile</activeProfile>
+  </activeProfiles>
+
+  <profiles>
+    <profile>
+      <id>publish-to-github-example-deployment-profile</id>
+      <properties>
+        <github.server>github</github.server>
+        <github.branchName>mvn-repo</github.branchName>
+        <github.branch>refs/heads/${github.branchName}</github.branch>
+      </properties>
+    </profile>
+  </profiles>
 
   <servers>
     <server>
       <id>github</id>
-      <username>YOUR-USERNAME</username>
-      <password>YOUR-PASSWORD</password>
+      <!-- CHANGE ME: BEGIN -->
+      <username>YOUR USERNAME</username>
+      <password>YOUR PASSWORD</password>
+      <!-- CHANGE ME: END -->
     </server>
   </servers>
 

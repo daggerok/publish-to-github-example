@@ -10,10 +10,9 @@ jdk: oraclejdk8
 install: true
 
 script:
-  #- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-  #- stop_any 5432 5672 27017 8080
-
-  - bash mvnw clean package -U
+  - bash ./mvnw clean package -U -f ./maven-producer/pom.xml -s maven-producer/settings.xml-default
+  - bash ./mvnw clean package -U -f ./maven-consumer/pom.xml
+  - java -jar ./maven-consumer/target/*-all.jar
 
 cache:
   directories:
