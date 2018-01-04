@@ -1,0 +1,6 @@
+= gradle-consumer image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
+
+links (TODO):
+
+. link:https://spring.io/blog/2017/08/01/spring-framework-5-kotlin-apis-the-functional-way[kotlin]
+. link:https://kotlinlang.org/docs/reference/compiler-plugins.html[kotlin plugins]

@@ -11,9 +11,14 @@ jdk: oraclejdk8
 install: true
 
 script:
+
+  # maven
   - bash ./mvnw clean package -f ./maven-producer/pom.xml -s ./maven-producer/settings.xml-default
   - bash ./mvnw clean package -U -f ./maven-consumer/pom.xml
   - java -jar ./maven-consumer/target/*-all.jar
+
+  # gradle
+  - bash ./gradlew clean build -b ./gradle-consumer/build.gradle
 
 cache:
   directories:

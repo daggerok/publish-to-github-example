@@ -1,6 +1,13 @@
 = publish-to-github-example image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
 
-=== flow
+=== gradle flow
+
+.2 build dependant project using `gradle-consumer` from Github
+----
+bash ./gradlew clean build -b gradle-consumer/build.gradle
+----
+
+=== maven flow
 
 .1 build and deploy (publish) `maven-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: libs)
 ----
