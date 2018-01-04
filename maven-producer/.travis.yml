@@ -3,4 +3,4 @@ install: true
 script:
 - sudo apt update
 - sudo apt install -y tree
-- tree -a .
+- tree -a *

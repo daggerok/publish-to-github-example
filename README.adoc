@@ -14,6 +14,6 @@ bash mvnw clean deploy -f maven-producer/pom.xml -P publish-to-github-example-de
 
 .2 build dependant project using `maven-producer` as a dependency from Github
 ----
-bash ./mvnw clean package -U -pl maven-consumer
+bash ./mvnw clean package -U -f maven-consumer/pom.xml
 java -jar maven-consumer/target/*-all.jar
 ----
