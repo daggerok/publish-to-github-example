@@ -1,0 +1,18 @@
+= publish-to-github-example
+
+=== flow
+
+.1 build `maven-producer` library
+----
+bash ./mvnw clean package -U -pl maven-producer
+----
+
+.2 deploy (publish) `maven-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: libs)
+----
+bash ./mvnw clean package -U -pl maven-producer
+----
+
+.3 build project which is using `maven-producer` library
+----
+bash ./mvnw clean package -U -pl maven-producer
+----
