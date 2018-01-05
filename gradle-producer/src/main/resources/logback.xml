@@ -25,7 +25,7 @@
       <pattern>%gray(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) %magenta(%thread{10}) [ %cyan(%-25.25logger{24})] - %boldWhite(%msg%n)</pattern>
     </encoder>
   </appender>
-  <root level="debug">
+  <root level="info">
     <appender-ref ref="STDOUT"/>
   </root>
 </configuration>
