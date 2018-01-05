@@ -1,6 +1,8 @@
 group: travis_lts
+
 install: true
+
 script:
 - sudo apt update
-- sudo apt install -y tree
+- sudo apt install tree
 - tree -a *
