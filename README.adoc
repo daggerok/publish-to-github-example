@@ -2,15 +2,20 @@
 
 === gradle flow
 
+.1 build and deploy (publish) `gradle-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: mvn-repo)
+----
+bash ./gradlew clean deploy -b gradle-producer/build.gradle
+----
+
 .2 build dependant project using `gradle-consumer` from Github
 ----
 bash ./gradlew clean build -b gradle-consumer/build.gradle
-java -jar gradle-consumer/build/libs/*-all.jar
+java -jar ./gradle-consumer/build/libs/*-all.jar
 ----
 
 === maven flow
 
-.1 build and deploy (publish) `maven-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: libs)
+.1 build and deploy (publish) `maven-producer` library to github (user: daggerok, repo: publish-to-github-example, branch: mvn-repo)
 ----
 # using custom settings.xml
 bash mvnw clean deploy -U -f maven-producer/pom.xml -s maven-producer/settings.xml

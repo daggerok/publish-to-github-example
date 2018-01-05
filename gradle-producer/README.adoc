@@ -1,0 +1,12 @@
+= gradle-producer image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
+
+.test
+----
+bash ./gradlew clean build -b gradle-consumer/build.gradle
+----
+
+links:
+
+. link:http://junit.org/junit5/docs/current/user-guide/[gradle junit 5 docs]
+. link:https://github.com/junit-team/junit5-samples/tree/r5.0.2/junit5-gradle-consumer[gradle junit 5 example]
+. link:https://docs.gradle.org/current/userguide/publishing_maven.html[gradle maven-publish plugin]

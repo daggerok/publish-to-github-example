@@ -1,6 +1,7 @@
 package daggerok
 
 import com.samskivert.mustache.Mustache
+import daggerok.impl.ServiceImpl
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.mustache.MustacheResourceTemplateLoader
 import org.springframework.boot.runApplication
@@ -16,16 +17,17 @@ class IndexCtrl {
 
   @GetMapping
   fun get(model: Model): Mono<String> {
-    model.addAttribute("name", "Maksimko")
+    val service: Service = ServiceImpl()
+    model.addAttribute("message", service.getOutput("Maksimko"))
     return Mono.just("index")
   }
 }
 
 @SpringBootApplication
-open class GradleProducerApplication {
+class GradleProducerApplication {
 
   @Bean
-  open fun viewResolver(): MustacheViewResolver {
+  fun viewResolver(): MustacheViewResolver {
     val prefix = "classpath:/templates/"
     val suffix = ".hbs"
     val loader = MustacheResourceTemplateLoader(prefix, suffix)

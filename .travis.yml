@@ -25,6 +25,7 @@ script:
 - java -jar ./maven-consumer/target/*-all.jar
 
 # gradle
+- bash ./gradlew clean build publish -b ./gradle-producer/build.gradle
 - bash ./gradlew clean build -b ./gradle-consumer/build.gradle
 - java -jar ./gradle-consumer/build/libs/*-all.jar &
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/src/wait_for.bash)

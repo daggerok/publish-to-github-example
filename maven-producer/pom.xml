@@ -9,11 +9,8 @@
     <jdk.version>1.8</jdk.version>
 
     <kotlin.version>1.2.10</kotlin.version>
-    <junit.version>4.12</junit.version>
     <slf4j.version>1.7.25</slf4j.version>
-    <junit.version>4.12</junit.version>
     <junit.jupiter.version>5.0.2</junit.jupiter.version>
-    <junit.vintage.version>${junit.version}.2</junit.vintage.version>
     <junit.platform.version>1.0.2</junit.platform.version>
 
     <!-- github aftifactory maven repository -->
@@ -75,12 +72,6 @@
       <version>${kotlin.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
 
     <!-- junit 5 -->
     <dependency>
@@ -90,29 +81,15 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- Only required to run tests in an IDE that bundles an older version -->
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-launcher</artifactId>
-      <version>${junit.platform.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- Only required to run tests in an IDE that bundles an older version -->
-    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <version>${junit.vintage.version}</version>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>${junit.platform.version}</version>
       <scope>test</scope>
     </dependency>
     <!-- To avoid compiler warnings about @API annotations in JUnit code -->
@@ -121,6 +98,7 @@
       <artifactId>apiguardian-api</artifactId>
       <version>1.0.0</version>
       <scope>test</scope>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -233,6 +211,7 @@
           <repositoryName>publish-to-github-example</repositoryName>
           <!-- github username: -->
           <repositoryOwner>daggerok</repositoryOwner>
+          <merge>true</merge>
         </configuration>
         <executions>
           <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
