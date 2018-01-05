@@ -211,6 +211,7 @@
           <repositoryName>publish-to-github-example</repositoryName>
           <!-- github username: -->
           <repositoryOwner>daggerok</repositoryOwner>
+          <merge>true</merge>
         </configuration>
         <executions>
           <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
