@@ -1,0 +1,28 @@
+= gradle-producer-release image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
+
+.release it
+----
+bash ./gradlew release
+----
+
+.revert
+----
+git reset --hard hash
+git push origin master --force
+----
+
+.remove tag (for example: 0.0.1)
+----
+git tag -d 0.0.1
+git push origin :refs/tags/0.0.1
+----
+
+.or
+----
+git push --delete origin 0.0.1
+git tag -d 0.0.1
+----
+
+links:
+
+. link:https://github.com/ajoberstar/gradle-git/wiki/SemVer%20Support[gradle github release plugin]

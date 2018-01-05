@@ -1,0 +1,74 @@
+buildscript {
+  ext {
+    kotlinVersion = "1.2.10"
+    lombokVersion = "1.16.18"
+    slf4jVersion = "1.7.25"
+    junitJupiterVersion = "5.0.2"
+    junitPlatformVersion = "1.0.2"
+
+    branchName = "mvn-repo"
+    mvnRepoDir = "$buildDir/$branchName"
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
+  }
+}
+
+plugins {
+  id "java"
+  id "org.ajoberstar.release-base" version "1.7.2"
+  id "org.ajoberstar.release-opinion" version "1.7.2"
+}
+
+apply plugin: "kotlin"
+apply plugin: "org.junit.platform.gradle.plugin"
+
+group "daggerok"
+version "0.0.1"
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+compileKotlin {
+  kotlinOptions.jvmTarget = project.targetCompatibility
+}
+
+compileTestKotlin {
+  kotlinOptions.jvmTarget = project.targetCompatibility
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
+      // @Slf4j
+      "org.slf4j:slf4j-api:$slf4jVersion",
+      "org.slf4j:jul-to-slf4j:$slf4jVersion",
+      "org.slf4j:log4j-over-slf4j:$slf4jVersion",
+      "ch.qos.logback:logback-classic:1.2.3"
+
+  compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+  // junit 5
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion",
+      // hamcrest asserts, like: assertThat
+      "org.hamcrest:hamcrest-core:1.3"
+
+  testRuntime "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion",
+      "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion",
+      // IDEA (older bundle):
+      "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
+
+  testCompileOnly "org.apiguardian:apiguardian-api:1.0.0",
+      "org.projectlombok:lombok:$lombokVersion"
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "4.4.1"
+  distributionType = "ALL"
+}
