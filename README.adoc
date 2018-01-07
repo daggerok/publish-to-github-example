@@ -1,4 +1,4 @@
-= publish-to-github-example image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
+= publish-to-github-example image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=0.0.3["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
 
 === gradle flow
 
