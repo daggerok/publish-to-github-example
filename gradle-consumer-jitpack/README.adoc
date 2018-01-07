@@ -1,4 +1,4 @@
-= gradle-consumer image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
+= gradle-consumer image:https://travis-ci.org/daggerok/publish-to-github-example.svg?branch=0.0.3["Build Status", link="https://travis-ci.org/daggerok/publish-to-github-example"]
 
 links (TODO):
 
